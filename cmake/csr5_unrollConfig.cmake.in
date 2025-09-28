@@ -1,0 +1,5 @@
+@PACKAGE_INIT@
+
+include("${CMAKE_CURRENT_LIST_DIR}/csr5_cunrollTargets.cmake")
+
+check_required_components(csr5_cunroll)
