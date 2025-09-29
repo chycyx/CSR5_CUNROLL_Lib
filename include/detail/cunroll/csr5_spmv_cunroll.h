@@ -160,7 +160,7 @@ for (int par_id = 0; par_id < p - 1; par_id++)
 
         vT *d_y_local = &d_y[row_start + 1];
         const int offset_pointer = empty_rows ? d_partition_descriptor_offset_pointer[par_id] : 0;
-//这一部分尚且存疑
+                
         // d_column_index_partition128i = (__m128i *)d_column_index_partition;
         // d_partition_descriptor128i  = (__m128i *)&d_partition_descriptor[par_id * ANONYMOUSLIB_CSR5_OMEGA * num_packet];
         d_column_index_partition128i = (int32_t *)&d_column_index_partition;
