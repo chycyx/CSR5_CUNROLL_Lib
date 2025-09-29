@@ -1,2 +1,0 @@
-/usr/bin/ar qc libcsr5_mmio.a CMakeFiles/csr5_mmio.dir/src/mmio.c.o
-/usr/bin/ranlib libcsr5_mmio.a

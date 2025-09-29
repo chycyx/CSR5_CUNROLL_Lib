@@ -1,2 +1,0 @@
-/usr/bin/ar qc libcsr5_cunroll.a CMakeFiles/csr5_cunroll.dir/csr5_cunroll.c.o
-/usr/bin/ranlib libcsr5_cunroll.a
