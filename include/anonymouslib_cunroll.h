@@ -18,10 +18,8 @@ public:
     int asCSR();
     int asCSR5();
     int setX(ANONYMOUSLIB_VT *x);
-    // ========== 修改：添加新的spmv接口支持beta ==========
-    int spmv(const ANONYMOUSLIB_VT alpha, ANONYMOUSLIB_VT *y);  // 保持旧接口
-    int spmv(const ANONYMOUSLIB_VT alpha, const ANONYMOUSLIB_VT beta, ANONYMOUSLIB_VT *y);  // 新接口
-    // ========== 修改结束 ==========
+    int spmv(const ANONYMOUSLIB_VT alpha, ANONYMOUSLIB_VT *y);  
+    int spmv(const ANONYMOUSLIB_VT alpha, const ANONYMOUSLIB_VT beta, ANONYMOUSLIB_VT *y);  
     int destroy();
     void setSigma(int sigma);
 
