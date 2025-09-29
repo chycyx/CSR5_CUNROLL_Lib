@@ -14,9 +14,6 @@
 #define ANONYMOUSLIB_CSR5_SIGMA      16
 #define ANONYMOUSLIB_X86_CACHELINE   64
 
-/********************
- * 1. SET
- ********************/
 #define C_setzero_pd(reg)        \
     do {                         \
         (reg)[0] = 0.0;          \
@@ -69,9 +66,6 @@
         (dst)[3] = (e3);                  \
     } while (0)
 
-/********************
- * 1.5. CAST
- ********************/
 static inline void C_castps256_ps128(float dst128[4], const float src256[8]) {
     dst128[0] = src256[0];
     dst128[1] = src256[1];
@@ -79,7 +73,6 @@ static inline void C_castps256_ps128(float dst128[4], const float src256[8]) {
     dst128[3] = src256[3];
 }
 
-/* 保留你原本的两个重载名（若用 C++ 编译器可重载；若用 C 编译请保留其中一个或改名） */
 static inline void C_castsi256_pd(double dst[4], const uint64_t src[4]) {
     union { uint64_t i; double d; } u;
     u.i = src[0]; dst[0] = u.d;
@@ -114,9 +107,6 @@ static inline void castsi128_si256(int dst256[8], const int src128[4]) {
     dst256[7] = 0;
 }
 
-/********************
- * 2. LOAD / STORE
- ********************/
 #define C_store_pd(mem, reg)     \
     do {                         \
         (mem)[0] = (reg)[0];     \
@@ -175,9 +165,6 @@ static inline void castsi128_si256(int dst256[8], const int src128[4]) {
         (reg)[3] = (mem)[3];       \
     } while (0)
 
-/********************
- * 3. GATHER
- ********************/
 #define C_i32gather_epi32(reg, base_addr, idx, scale) \
     do {                                              \
         const char* _base = (const char*)(base_addr); \
@@ -187,9 +174,6 @@ static inline void castsi128_si256(int dst256[8], const int src128[4]) {
         (reg)[3] = *(const int32_t*)(_base + (idx)[3] * (scale)); \
     } while (0)
 
-/********************
- * 4. ARITHMETIC
- ********************/
 #define C_add_epi32(reg, a, b)  \
     do {                        \
         (reg)[0] = (a)[0] + (b)[0]; \
@@ -270,9 +254,6 @@ static inline void castsi128_si256(int dst256[8], const int src128[4]) {
         (reg)[3] = (a)[3] - (b)[3]; \
     } while (0)
 
-/********************
- * 5. LOGICAL
- ********************/
 #define C_and_si256(reg, a, b)  \
     do {                        \
         (reg)[0] = (a)[0] & (b)[0]; \
@@ -298,7 +279,6 @@ static inline void castsi128_si256(int dst256[8], const int src128[4]) {
     } while (0)
 
 static inline int C_testz_si256(const uint64_t a[4], const uint64_t b[4]) {
-    /* 等价于循环：若 (a[i] & b[i]) 全为 0 则返回 1，否则 0 */
     return (((a[0] & b[0]) | (a[1] & b[1]) | (a[2] & b[2]) | (a[3] & b[3])) == 0);
 }
 
@@ -318,9 +298,6 @@ static inline void C_and_pd(double dst[4], const double a[4], const double b[4])
         (dst)[3] = (~(a)[3]) & (b)[3]; \
     } while (0)
 
-/********************
- * 6. SHIFT
- ********************/
 #define C_srli_epi32(reg, a, imm)        \
     do {                                  \
         (reg)[0] = (int32_t)((uint32_t)(a)[0] >> (imm)); \
@@ -337,9 +314,6 @@ static inline void C_and_pd(double dst[4], const double a[4], const double b[4])
         (reg)[3] = (int32_t)((uint32_t)(a)[3] << (imm)); \
     } while (0)
 
-/********************
- * 7. CONVERT
- ********************/
 #define C_cvtepu32_epi64(reg, a) \
     do {                         \
         (reg)[0] = (uint64_t)(a)[0]; \
@@ -348,9 +322,6 @@ static inline void C_and_pd(double dst[4], const double a[4], const double b[4])
         (reg)[3] = (uint64_t)(a)[3]; \
     } while (0)
 
-/********************
- * 8. COMPARE
- ********************/
 #define C_cmpeq_epi64(reg, a, b)                            \
     do {                                                    \
         (reg)[0] = ((a)[0] == (b)[0]) ? 0xFFFFFFFFFFFFFFFFULL : 0ULL; \
@@ -367,9 +338,6 @@ static inline void C_and_pd(double dst[4], const double a[4], const double b[4])
         (reg)[3] = ((a)[3] > (b)[3]) ? 0xFFFFFFFFFFFFFFFFULL : 0ULL; \
     } while (0)
 
-/********************
- * 9. SWIZZLE
- ********************/
 #define C_permutevar8x32_epi32(dst, src, index) \
     do {                                        \
         (dst)[0] = (src)[(index)[0]];           \
@@ -382,7 +350,6 @@ static inline void C_and_pd(double dst[4], const double a[4], const double b[4])
         (dst)[7] = (src)[(index)[7]];           \
     } while (0)
 
-/*原样复制 */
 #define C_permute_ps(dst, in, imm8) \
     do {                            \
         (void)(imm8);               \
@@ -405,7 +372,6 @@ static inline void C_and_pd(double dst[4], const double a[4], const double b[4])
     } while (0)
 
 static inline void C_blendv_pd(double dst[4], const double a[4], const double b[4], const int64_t mask[4]) {
-    /* 依据 mask 的符号位（最高位）选择 */
     int64_t msb;
     msb = (mask[0] >> 63) & 1; dst[0] = msb ? b[0] : a[0];
     msb = (mask[1] >> 63) & 1; dst[1] = msb ? b[1] : a[1];
@@ -417,8 +383,8 @@ static inline void C_blendv_pd(double dst[4], const double a[4], const double b[
 static inline void C_permute2f128_ps(float dst[8], const float a[8],
                                      const float b[8], unsigned imm8)
 {
-    int sel_low  =  imm8        & 0x3; /* 低 128-bit 来源选择 */
-    int sel_high = (imm8 >> 4)  & 0x3; /* 高 128-bit 来源选择 */
+    int sel_low  =  imm8        & 0x3; 
+    int sel_high = (imm8 >> 4)  & 0x3; 
 
     /* low 128-bit */
     if (imm8 & 0x08) {
