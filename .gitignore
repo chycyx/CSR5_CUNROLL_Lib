@@ -1,0 +1,66 @@
+# Prerequisites
+*.d
+
+# Object files
+*.o
+*.obj
+*.lo
+*.slo
+
+# Precompiled headers
+*.gch
+*.pch
+
+# Dynamic libraries
+*.so
+*.so.*
+*.dylib
+*.dll
+
+# Static libraries
+*.a
+*.la
+*.lai
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Fortran modules
+*.mod
+*.smod
+
+# CUDA artifacts
+*.ptx
+*.cubin
+
+# CMake files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps/
+Makefile
+
+# Build directories
+build/
+build-*/
+
+# IDE settings
+.vscode/
+.idea/
+
+# System files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Logs and temp files
+*.log
+*.tmp
+*.bak
