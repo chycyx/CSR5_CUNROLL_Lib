@@ -438,8 +438,8 @@ uint64_t C_mask_all1[4] = {
                     for (int jj = 0; jj < 4; ++jj) C_y_idx128i[jj] = C_y_offset128i[jj];
                 }
 
-                // store to s_cond, s_y_idx, s_sum (模拟原始 AVX store)
-                C_store_si256_i64((int64_t*)s_cond, C_direct256i);     // s_cond <- direct256i (按你文档用法)
+                // store to s_cond, s_y_idx, s_sum
+                C_store_si256_i64((int64_t*)s_cond, C_direct256i);     // s_cond <- direct256i
                 C_store_si128_i32(s_y_idx, C_y_idx128i);               // s_y_idx <- C_y_idx128i
                 C_store_pd(s_sum, C_last_sum256d);                     // s_sum <- C_last_sum256d
                 if (s_cond[0]) {d_y_local[s_y_idx[0]] += s_sum[0]* alpha; C_store_pd(s_first_sum, C_first_sum256d);}
